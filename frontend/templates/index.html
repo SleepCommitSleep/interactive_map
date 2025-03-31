@@ -1,19 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static "css/index.css" %}" />
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерфейс навигации</title>
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div id="map">
-        <img href="api/image">
+    <div class="container">
+        <div class="sidebar">
+            <div class="title-container">
+                <div class="title">Карта терминалов</div>
+                <div class="gradient-line"></div>
+            </div>
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" placeholder="Где вы?">
+                </div>
+                <div class="search-box">
+                    <input type="text" placeholder="Куда нужно?">
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <div class="action-button">
+                    <div class="icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <div class="text">
+                        <span>Посмотреть информацию о состоянии компьютеров</span>
+                    </div>
+                </div>
+                
+                <div class="action-button">
+                    <div class="icon">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <div class="text">
+                        <span>Обнаружили поломку?</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <div class="map">
+                <!--хдесь будет карта  -->
+            </div>
+            <div class="zoom-controls">
+                <button class="zoom-button zoom-in">+</button>
+                <button class="zoom-button zoom-out">-</button>
+            </div>
+        </div>
     </div>
-    <div id="main">
-        <div id="app"></div>
-    </div>
-    <script src="{% static "frontend/main.js" %}"></script>
 </body>
 </html>
