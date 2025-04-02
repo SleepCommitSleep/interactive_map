@@ -131,7 +131,7 @@
 .map {
 
     background-image: url('/api/image');
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-color: #f0f0f0; /* Фон, если изображение не покрывает блок */
@@ -204,9 +204,9 @@
         }
         #info-panel {
             position: fixed;
-            bottom: 10px;
-            left: 10px;
+            font-size: 15px;
+            bottom: 200px;
+            left: 15px;
             background: rgba(255, 255, 255, 0.8);
-            padding: 10px;
             border-radius: 5px;
         }
