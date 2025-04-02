@@ -150,3 +150,22 @@ const image = document.getElementById('draggable-image');
                 }
             });
         }
+
+        //для кнопок увеличения и уменьшения масштаба
+document.querySelector('.zoom-in').addEventListener('click', () => {
+    const scaleFactor = 1.1;
+    const newScale = scale * scaleFactor;
+    if (newScale <= 10) {
+        scale = newScale;
+        updateTransform();
+    }
+});
+
+document.querySelector('.zoom-out').addEventListener('click', () => {
+    const scaleFactor = 0.9;
+    const newScale = scale * scaleFactor;
+    if (newScale >= 0.1) {
+        scale = newScale;
+        updateTransform();
+    }
+});
