@@ -14,7 +14,7 @@ import os
 class ImageView(generics.ListAPIView):
     def get(self, request):
         code = request.GET.get(self.lookup_url_kwarg)
-        img = ImageFile(open(f"{settings.MEDIA_ROOT}/map.png", 'rb'))
+        img = ImageFile(open(f"{settings.MEDIA_ROOT}/map_min.png", 'rb'))
 
         return HttpResponse(img, content_type="image/png")
 

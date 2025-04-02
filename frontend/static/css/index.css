@@ -129,12 +129,15 @@
 }
 
 .map {
+
+    background-image: url('/api/image');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #f0f0f0; /* Фон, если изображение не покрывает блок */
     width: 100%;
     height: 100%;
-    background-image: url('../Images/map_min.png');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+    min-height: 200px; /* Минимальная высота блока */
 }
 
   
@@ -169,3 +172,41 @@
     background-color: #5ad1ea;
     transform: scale(1.1);
   }
+
+  #draggable-image {
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            position: absolute;
+            cursor: move;
+            transform-origin: 0 0;
+            user-select: none; /* Предотвращает выделение изображения */
+        }
+.marker {
+            z-index: 100;
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .marker::after {
+            content: attr(data-coords);
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        #info-panel {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+        }
