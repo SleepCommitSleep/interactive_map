@@ -131,7 +131,7 @@
 .map {
 
     background-image: url('/api/image');
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     background-color: #f0f0f0; /* Фон, если изображение не покрывает блок */
@@ -180,7 +180,7 @@
             position: absolute;
             cursor: move;
             transform-origin: 0 0;
-            user-select: none; /* Предотвращает выделение изображения */
+            user-select: none; 
         }
 .marker {
             z-index: 100;
@@ -210,3 +210,42 @@
             background: rgba(255, 255, 255, 0.8);
             border-radius: 5px;
         }
+
+.computer-icon {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-image: url('/static/images/computer-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s;
+}
+
+.computer-icon:hover {
+    transform: scale(1.2);
+}
+
+.computer-info {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    z-index: 100;
+}
+
+.computer-info h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.computer-info p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
