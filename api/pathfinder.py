@@ -5,20 +5,19 @@ grid_width = img_width // grid_size
 grid_height = img_height // grid_size
 
 
-def open_mask(mask_file_name):
+def open_mask(mask_file):
     mask = []
-    with open(mask_file_name, "r") as mask_file:
-        (width, height) = mask_file.readline().split(" ")
-        for row_num in range(int(height)):
-            row = mask_file.readline().replace("\n", "").split(" ")
-            for cell_num in range(int(width)):
-                row[cell_num] = int(row[cell_num])
-            mask.append(row)
+    (width, height) = mask_file.readline().split(" ")
+    for row_num in range(int(height)):
+        row = mask_file.readline().replace("\n", "").split(" ")
+        for cell_num in range(int(width)):
+            row[cell_num] = int(row[cell_num])
+        mask.append(row)
     return mask
 
 
 def find_path(start_point, end_point, mask):
-    old_wave = [start_point]
+    old_wave = [[start_point[1], start_point[0]]]
     new_wave = []
     length_map = []
     for i in range(grid_height):
@@ -28,7 +27,7 @@ def find_path(start_point, end_point, mask):
                 length_map[i].append(-1)
             else:
                 length_map[i].append(0)
-    length_map[start_point[0]][start_point[1]] = 0
+    length_map[start_point[1]][start_point[0]] = 0
 
     current_length = 0
     end_found = 0
@@ -60,7 +59,7 @@ def find_path(start_point, end_point, mask):
 
     found_dest = 0
     path = []
-    current_cell = end_point
+    current_cell = [end_point[1], end_point[0]]
     current_length = length_map[current_cell[0]][current_cell[1]]
     while (not found_dest):
         if current_length == 0 or current_length == -1:
@@ -91,4 +90,7 @@ def find_path(start_point, end_point, mask):
                 current_cell = [current_cell[0], current_cell[1] - 1]
         if current_length == 1:
             found_dest = 1
+    for point in path:
+        point[0] = point[0] * 6
+        point[1] = point[1] * 6
     return path
