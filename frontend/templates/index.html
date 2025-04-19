@@ -37,6 +37,10 @@
         <!--здесь будет карта-->
         <img src="{% static 'images/map_min.png' %}" alt="Карта терминалов" id="map-image">
 
+        <canvas id="canvas"></canvas>
+            <svg id="svg-path">
+                <path id="path" />
+            </svg>
     </div>
     <div class="zoom-controls">
         <button class="zoom-button zoom-in">+</button>
@@ -46,5 +50,81 @@
 </div>
     <script src="{% static 'js/markers.js' %}"></script>
     <script src="{% static 'js/map.js' %}"></script>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерфейс навигации</title>
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="title-container">
+                <div class="title">Карта терминалов</div>
+                <div class="gradient-line"></div>
+            </div>
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" placeholder="Где вы?">
+                </div>
+                <div class="search-box">
+                    <input type="text" placeholder="Куда нужно?">
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <div class="action-button">
+                    <div class="icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <div class="text">
+                        <span>Посмотреть информацию о состоянии компьютеров</span>
+                    </div>
+                </div>
+                
+                <div class="action-button">
+                    <div class="icon">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <div class="text">
+                        <span>Обнаружили поломку?</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <div id="markers-container"></div>
+            <div id="info-panel">
+                <p>Координаты маркеров:</p>
+                <p>Маркер 1: <span id="marker1-coords">не установлен</span></p>
+                <p>Маркер 2: <span id="marker2-coords">не установлен</span></p>
+                <p>Расстояние между маркерами: <span id="distance">-</span> пикселей</p>
+            </div>
+            
+            <img src="/api/image?map_id=1" class="map" id="draggable-image">
+                <!--здесь будет карта  -->
+            <canvas id="canvas"></canvas>
+            <svg id="svg-path">
+                <path id="path" />
+            </svg>
+            <div class="zoom-controls">
+                <button class="zoom-button zoom-in">+</button>
+                <button class="zoom-button zoom-out">-</button>
+            </div>
+        </div>
+    </div>
+<script src="{% static "frontend/main.js" %}"></script>
 </body>
 </html>
