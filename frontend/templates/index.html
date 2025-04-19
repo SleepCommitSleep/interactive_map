@@ -54,10 +54,13 @@
                 <p>Маркер 2: <span id="marker2-coords">не установлен</span></p>
                 <p>Расстояние между маркерами: <span id="distance">-</span> пикселей</p>
             </div>
-            <div class="map" id="draggable-image">
+            
+            <img src="/api/image?map_id=1" class="map" id="draggable-image">
                 <!--здесь будет карта  -->
-
-            </div>
+            <canvas id="canvas"></canvas>
+            <svg id="svg-path">
+                <path id="path" />
+            </svg>
             <div class="zoom-controls">
                 <button class="zoom-button zoom-in">+</button>
                 <button class="zoom-button zoom-out">-</button>
