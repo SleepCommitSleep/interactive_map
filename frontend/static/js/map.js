@@ -1,47 +1,66 @@
-//данные о компах с координатами на карте
-const computers = [
-    { id: 1, name: 'Компьютер 1', x: 827, y: 530, details: 'Описание компьютера 1' },
-    { id: 2, name: 'Компьютер 2', x: 715, y: 533, details: 'Описание компьютера 2' },
-    { id: 3, name: 'Компьютер 3', x: 487, y: 607, details: 'Описание компьютера 3' },
-    { id: 4, name: 'Компьютер 4', x: 453, y: 610, details: 'Описание компьютера 4' },
-  
-];
-
-//иконки компьютеров
+//функция для получения данных о компьютерах
+async function fetchComputers() {
+    try {
+        const response = await fetch('/api/terminals?map_id=1');
+        const computers = await response.json();
+        return computers;
+    } catch (error) {
+        console.error('Ошибка при получении данных о компьютерах:', error);
+        return [];
+    }
+}
+//создание иконки компьютера
 function createComputerIcon(computer) {
+    console.log('Создаем иконку для компьютера:', computer);
     const icon = document.createElement('div');
     icon.className = 'computer-icon';
     icon.style.position = 'absolute';
-    icon.style.left = `${computer.x}px`;
-    icon.style.top = `${computer.y}px`;
+    
+    const map = document.getElementById('map-image');
+    const initialScale = map.naturalWidth / map.width;
+    
+    //масштабируем координаты
+    const scaledX = computer.coord_x / (initialScale * 6);
+    const scaledY = computer.coord_y / (initialScale * 6);
+    
+    console.log(`Масштабированные координаты для ${computer.name}:`, {
+        originalX: computer.coord_x,
+        originalY: computer.coord_y,
+        scaledX: scaledX,
+        scaledY: scaledY,
+        initialScale: initialScale
+    });
+
+    icon.style.left = `${scaledX}px`;
+    icon.style.top = `${scaledY}px`;
     icon.style.width = '30px';
     icon.style.height = '30px';
-    icon.style.backgroundImage = "url('/static/images/computer-icon.png')";
-    icon.style.backgroundSize = 'contain';
-    icon.style.backgroundRepeat = 'no-repeat';
+    icon.style.backgroundColor = '#2196F3';
+    icon.style.borderRadius = '50%';
+    icon.style.border = '2px solid white';
+    icon.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
     icon.style.cursor = 'pointer';
     icon.style.zIndex = '10';
-    icon.style.transition = 'transform 0.2s ease';
+    icon.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
     icon.title = computer.name;
     
-    //эффект при наведении
+    //эффект при наведении на иконку
     icon.addEventListener('mouseenter', () => {
         icon.style.transform = 'scale(1.2)';
+        icon.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
     });
     
     icon.addEventListener('mouseleave', () => {
         icon.style.transform = 'scale(1)';
+        icon.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
     });
     
     //обработчик клика
     icon.addEventListener('click', (e) => {
         e.stopPropagation();
-        icon.style.transform = 'scale(0.9)';
-        setTimeout(() => {
-            icon.style.transform = 'scale(1)';
-        }, 200);
         showComputerInfo(computer);
     });
+    
     return icon;
 }
 
@@ -52,9 +71,8 @@ function showComputerInfo(computer) {
     const detailsElement = document.getElementById('computerDetails');
     
     nameElement.textContent = computer.name;
-    detailsElement.textContent = computer.details;
+    detailsElement.textContent = computer.info;
     
-    //панель информации
     infoPanel.style.display = 'block';
     infoPanel.style.position = 'absolute';
     infoPanel.style.top = '20px';
@@ -68,12 +86,10 @@ function showComputerInfo(computer) {
     infoPanel.style.transition = 'opacity 0.3s ease';
     infoPanel.style.opacity = '0';
     
-    //анимация появления
     setTimeout(() => {
         infoPanel.style.opacity = '1';
     }, 10);
     
-    //закрытие панели при клике на карту
     document.addEventListener('click', function closeInfoPanel(e) {
         if (!infoPanel.contains(e.target) && !e.target.classList.contains('computer-icon')) {
             infoPanel.style.opacity = '0';
@@ -86,18 +102,24 @@ function showComputerInfo(computer) {
 }
 
 //инициализация карты
-function initMap() {
+async function initMap() {
     const map = document.getElementById('draggable-image');
-    map.style.position = 'relative';  
-    //добавляем иконки компьютеров на карту
-    computers.forEach(computer => {
-        const icon = createComputerIcon(computer);
-        map.appendChild(icon);
-    });
-    //обработчик для закрытия информации при клике
-    map.addEventListener('click', () => {
-        const infoPanel = document.getElementById('computerInfo');
-        infoPanel.style.display = 'none';
-    });
+    map.style.position = 'relative';
+    
+    try {
+        //получаем данные о компьютерах
+        const computers = await fetchComputers();
+        console.log('Получены данные о компьютерах:', computers);
+        
+        //добавляем иконки компьютеров на карту
+        computers.forEach(computer => {
+            const icon = createComputerIcon(computer);
+            map.appendChild(icon);
+            console.log(`Добавлена иконка для ${computer.name}`);
+        });
+    } catch (error) {
+        console.error('Ошибка при инициализации карты:', error);
+    }
 }
-document.addEventListener('DOMContentLoaded', initMap); 
+
+initMap();
