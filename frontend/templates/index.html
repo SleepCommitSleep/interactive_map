@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Интерфейс навигации</title>
@@ -44,16 +45,28 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="map-container">
-            <div class="map">
-                <!--хдесь будет карта  -->
+            <div id="markers-container"></div>
+            <div id="info-panel">
+                <p>Координаты маркеров:</p>
+                <p>Маркер 1: <span id="marker1-coords">не установлен</span></p>
+                <p>Маркер 2: <span id="marker2-coords">не установлен</span></p>
+                <p>Расстояние между маркерами: <span id="distance">-</span> пикселей</p>
             </div>
+            
+            <img src="/api/image?map_id=1" class="map" id="draggable-image">
+                <!--здесь будет карта  -->
+            <canvas id="canvas"></canvas>
+            <svg id="svg-path">
+                <path id="path" />
+            </svg>
             <div class="zoom-controls">
                 <button class="zoom-button zoom-in">+</button>
                 <button class="zoom-button zoom-out">-</button>
             </div>
         </div>
     </div>
+<script src="{% static "frontend/main.js" %}"></script>
 </body>
 </html>
